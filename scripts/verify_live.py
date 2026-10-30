@@ -6,10 +6,14 @@ report/manifest.json'daki her dosyayı sunucudan çeker ve SHA-256 değerini kop
 Ayrıca yönlendirmeleri (http -> https, www -> çıplak alan adı), 404 sayfasını ve dışarıdan
 görünmemesi gereken yolları dener.
 
-  python3 scripts/verify_live.py --host suleymankaynak.com [--ip 1.2.3.4] [--limit N]
+  python3 scripts/verify_live.py --host suleymankaynak.com [--ip 1.2.3.4] [--limit N] [--http-only]
 
 --ip verilirse DNS yerine bu IP'ye bağlanılır (Host ve SNI yine --host olur, sertifika doğrulanmaz).
-DNS'i değiştirmeden yeni sunucuyu denemek içindir. Çıkış kodu: 0 = her şey tamam, 1 = sorun var.
+DNS'i değiştirmeden yeni sunucuyu denemek içindir.
+--http-only: sunucuda henüz geçerli bir SSL sertifikası yokken (DNS çevrilmeden AutoSSL çalışmaz) dosyaları
+yine de doğrulamak için; içerik düz HTTP (80) ile ve "X-Forwarded-Proto: https" başlığıyla çekilir, böylece
+deploy/htaccess https'e yönlendirmez. https ve sertifika bu kipte denenmez.
+Çıkış kodu: 0 = her şey tamam, 1 = sorun var.
 """
 import argparse
 import concurrent.futures as cf
@@ -33,9 +37,10 @@ SHOULD_BE_HIDDEN = ["/.cpanel.yml", "/.git/HEAD", "/deploy/htaccess", "/report/m
 
 
 class Cfg:
-    def __init__(self, host, ip, http_port, https_port, timeout):
+    def __init__(self, host, ip, http_port, https_port, timeout, http_only=False):
         self.host, self.ip = host, ip
         self.http_port, self.https_port, self.timeout = http_port, https_port, timeout
+        self.http_only = http_only
 
 
 class IPSNIConnection(http.client.HTTPSConnection):
@@ -55,6 +60,11 @@ class IPSNIConnection(http.client.HTTPSConnection):
 
 def fetch(cfg, path, host=None, scheme="https"):
     host = host or cfg.host
+    extra = {}
+    if scheme == "https" and cfg.http_only:
+        # Ön kontrol: https istekleri düz HTTP ile yapılır; başlık yönlendirmeyi engeller (deploy/htaccess'e bak)
+        scheme = "http"
+        extra["X-Forwarded-Proto"] = "https"
     if scheme == "https":
         port = cfg.https_port
         if cfg.ip:
@@ -64,8 +74,8 @@ def fetch(cfg, path, host=None, scheme="https"):
     else:
         conn = http.client.HTTPConnection(cfg.ip or host, cfg.http_port, timeout=cfg.timeout)
     try:
-        conn.request("GET", path, headers={"Host": host, "User-Agent": UA, "Accept": "*/*",
-                                           "Accept-Encoding": "identity", "Connection": "close"})
+        conn.request("GET", path, headers=dict({"Host": host, "User-Agent": UA, "Accept": "*/*",
+                                                "Accept-Encoding": "identity", "Connection": "close"}, **extra))
         r = conn.getresponse()
         body = r.read()
         return r.status, {k.lower(): v for k, v in r.getheaders()}, body
@@ -194,6 +204,8 @@ def main():
     ap.add_argument("--http-port", type=int, default=80)
     ap.add_argument("--https-port", type=int, default=443)
     ap.add_argument("--timeout", type=float, default=60)
+    ap.add_argument("--http-only", action="store_true",
+                    help="ön kontrol: https/sertifika yokken düz HTTP (80) ile doğrula")
     a = ap.parse_args()
 
     if not re.fullmatch(r"[a-z0-9.-]+", a.host):
@@ -213,8 +225,10 @@ def main():
     p404 = os.path.join(a.site_dir, "404.html")
     site404 = open(p404, "rb").read() if os.path.isfile(p404) else None
 
-    cfg = Cfg(a.host, a.ip, a.http_port, a.https_port, a.timeout)
+    cfg = Cfg(a.host, a.ip, a.http_port, a.https_port, a.timeout, a.http_only)
     where = "IP %s üzerinden" % a.ip if a.ip else "DNS'in gösterdiği sunucudan"
+    if a.http_only:
+        where += ", yalnızca HTTP ön kontrolü"
     print("Kontrol: %s, %s, %d dosya%s" % (a.host, where, len(items), " (örnek)" if a.limit else ""), flush=True)
 
     t0 = time.time()
@@ -259,8 +273,15 @@ def main():
         for _k, u, d in warnings[:15]:
             L.append("- %s: %s" % (u, d))
     L.append("")
-    L.append("**Sonuç: %s**" % ("TAMAM, site kopyayla bayt bayt aynı" if not problems and not bad_behav and not a.limit
-                                 else ("TAMAM (yalnızca örnek denendi)" if not problems and not bad_behav else "SORUN VAR")))
+    if problems or bad_behav:
+        verdict = "SORUN VAR"
+    elif a.limit:
+        verdict = "TAMAM (yalnızca örnek denendi)"
+    elif a.http_only:
+        verdict = "TAMAM, dosyalar kopyayla bayt bayt aynı (https ve sertifika bu ön kontrolde denenmedi)"
+    else:
+        verdict = "TAMAM, site kopyayla bayt bayt aynı"
+    L.append("**Sonuç: %s**" % verdict)
     text = "\n".join(L)
     print(text)
     for name, ok, detail in behav:

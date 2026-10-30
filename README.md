@@ -10,7 +10,7 @@ suleymankaynak.com sitesinin statik kopyası (HTML, CSS, JS, görseller, doküma
 - `scripts/mirror.py`: indirme scripti (Python, ek paket gerektirmez).
 - `.github/workflows/mirror.yml`: Actions sekmesinde **Siteyi kopyala** → **Run workflow** ile yeniden indirir.
 - `.github/workflows/404-sayfasi.yml`: **404 sayfasını al** → sitenin kendi 404 sayfasını `site/404.html` olarak kaydeder.
-- `.github/workflows/canli-kontrol.yml`: Actions sekmesinde **Canlı kontrol** → **Run workflow**. IP alanına yeni sunucunun IP adresini yazarsan DNS değişmeden o sunucudaki site, repodaki kopyayla bayt bayt karşılaştırılır; boş bırakırsan DNS'in gösterdiği sunucu denenir. Sonuç, çalıştırmanın **Summary** sayfasında görünür.
+- `.github/workflows/canli-kontrol.yml`: Actions sekmesinde **Canlı kontrol** → **Run workflow**. IP alanına yeni sunucunun IP adresini yazarsan DNS değişmeden o sunucudaki site, repodaki kopyayla bayt bayt karşılaştırılır; boş bırakırsan DNS'in gösterdiği sunucu denenir. **http** kutusunu işaretlersen dosyalar yalnızca HTTP (80) ile doğrulanır; sunucuda henüz sertifika yokken (DNS çevrilmeden önce) kullanılır. Sonuç, çalıştırmanın **Summary** sayfasında görünür.
 
 ## Veridyen / cPanel'e kurulum
 
@@ -19,6 +19,26 @@ suleymankaynak.com sitesinin statik kopyası (HTML, CSS, JS, görseller, doküma
 - `main` dalına zorla gönderim (force push) yapma: cPanel "Update from Remote" yalnızca ileri sarmayı (fast-forward) kabul eder.
 - Disk: site 1,1 GB. Klon + çalışma kopyası + `public_html` birlikte yaklaşık 3,3 GB tutar; hesaba en az 4 GB kota ver.
 - Alan adının MX kaydı alan adının kendisini gösteriyor (e-posta web sunucusuyla aynı yerde). DNS'te A kaydını değiştirmeden önce e-posta için ayrı bir karar gerekir; ayrıntı `report/kontrol_notlari.md` içinde.
+
+### Panelde Terminal yoksa veya "The system cannot deploy" yazıyorsa
+
+`.cpanel.yml`'nin yaptığı kopyalamayı cPanel > **Cron Jobs** ile elle yapabilirsin: "Once Per Minute (* * * * *)" seç, aşağıdaki
+tek satırı Command kutusuna yapıştır, ekle. Çıktı `/home/sulo/sk-durum.txt` dosyasına yazılır (tarih, HEAD, `git status`,
+iki sayfanın boyutu: `blog` 55017, `gallery` 211509 bayt; sonda `TAMAM`). `TAMAM` görününce cron işini sil. Dosyada `TAMAM`
+varken komut bir şey yapmaz. Kopyalama klonun çalışma kopyasından yapılır; klon bir tarayıcı tarafından değiştirilmişse
+`git status` bunu gösterir.
+
+```
+grep -qs TAMAM /home/sulo/sk-durum.txt || { cd /home/sulo/repositories/sk && { date; git log -1 --oneline; git status --short | head -40; ls -l site/blog/index.html site/gallery/index.html; cp -a site/. /home/sulo/public_html/ && cp deploy/htaccess /home/sulo/public_html/.htaccess && rm -f /home/sulo/public_html/.nojekyll && echo TAMAM; du -sh /home/sulo/public_html; date; } > /home/sulo/sk-durum.txt 2>&1; }
+```
+
+### DNS çevrilmeden önce ön kontrol
+
+AutoSSL, alan adı yeni sunucuya bakmadan sertifika veremez; o yüzden DNS'ten önce https denenemez. Actions > **Canlı kontrol** >
+IP: `78.142.210.233`, **http** kutusu işaretli çalıştırınca 2485 dosyanın hepsi düz HTTP ile çekilip SHA-256 ile karşılaştırılır
+(`X-Forwarded-Proto: https` başlığı, `deploy/htaccess`'in https yönlendirmesini atlatır; http→https, www→çıplak alan ve 404
+davranışları yine denenir). Sertifika ve https bu kontrolde denenmez; onlar DNS'ten ve AutoSSL'den sonra **http** işaretsiz
+çalıştırılan kontrolle (`bekle` seçeneğiyle) doğrulanır.
 
 ## Dikkat: kopyadaki zararlı script
 
