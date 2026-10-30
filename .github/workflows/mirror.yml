@@ -31,8 +31,8 @@ jobs:
 
       - name: Siteyi indir
         env:
-          WORKERS: "12"
-          DELAY: "0.02"
+          WORKERS: "8"
+          DELAY: "0.05"
           MAX_SECONDS: "10800"
           MAX_PAGES: "3000"
           PROGRESS_PUSH: "1"

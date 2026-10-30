@@ -929,6 +929,12 @@ def main():
     print("Site: %s  IP: %s" % (SITE, ", ".join(ips) or "?"), flush=True)
 
     home = fetch(BASE + "/")
+    for k in range(4):        # geçici bağlantı sorunlarında (zaman aşımı vb.) yeniden dene
+        if not home.get("error") or home.get("status"):
+            break
+        print("Ana sayfa alınamadı (%s); 30 sn sonra yeniden denenecek (%d/4)" % (home["error"], k + 1), flush=True)
+        time.sleep(30)
+        home = fetch(BASE + "/")
     home_ok = not home.get("error") and home["status"] == 200 and home["ctype"] in HTML_TYPES
     os.makedirs(REPORT, exist_ok=True)
     if not home_ok:
