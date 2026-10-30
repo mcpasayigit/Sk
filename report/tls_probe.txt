@@ -1,0 +1,17 @@
+# TLS denemeleri: suleymankaynak.com (2026-10-30 01:33:59)
+| istemci | ClientHello (bayt) | sonuç |
+|---|---|---|
+| py varsayılan | 517 | OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.9s) ; OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.5s) |
+| py TLS<=1.2 | 215 | OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.5s) ; OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.4s) |
+| py ALPN http/1.1 | 517 | OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.3s) ; OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.6s) |
+| py ALPN h2+http/1.1 | 517 | OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'' (1.1s) ; OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'' (0.7s) |
+| py tek şifre TLS1.2 | 163 | OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.3s) ; OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.7s) |
+| py tüm şifreler | 517 | OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.0s) ; OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.1s) |
+| py biletsiz | 517 | OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.0s) ; OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'HTTP/1.1 200 OK\r\n' (1.1s) |
+| py ALPN+biletsiz+TLS1.2 | 229 | OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'' (0.9s) ; OK TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 b'' (1.0s) |
+| curl varsayılan | 517 | 200 tls=0.683547s ; 200 tls=0.399085s |
+| curl --http1.1 | 517 | 200 tls=0.402964s ; 200 tls=0.394878s |
+| curl TLS1.2 (min+max) | 229 | 200 tls=0.396045s ; 200 tls=0.400817s |
+| curl --tls-max 1.2 | 229 | 200 tls=0.408781s ; 200 tls=0.754413s |
+| curl --no-alpn | 517 | 200 tls=0.395530s ; 200 tls=0.947605s |
+| curl tek şifre TLS1.2 | 177 | 200 tls=0.403423s ; 200 tls=0.395826s |
