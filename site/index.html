@@ -547,13 +547,13 @@ var FOOBOX = window.FOOBOX = {
 		</figure>
 	</div>
 </div></div></div></div></div></div></div></div><div data-vc-full-width="true" data-vc-full-width-init="false" data-vc-stretch-content="true" class="vc_row wpb_row vc_row-fluid vc_custom_1498178113401 vc_row-no-padding"><div class="wpb_animate_when_almost_visible wpb_fadeIn fadeIn wpb_column vc_column_container vc_col-sm-12"><div class="vc_column-inner "><div class="wpb_wrapper">
-	<div id="map_6ae3f48c55095" class="ulms_gmap_carousel gizle">
-		<div style="height: 420px;" id="ulms-gmap-6ae3f48c55094" class="gmap"></div>
+	<div id="map_6ae3f7db48e37" class="ulms_gmap_carousel gizle">
+		<div style="height: 420px;" id="ulms-gmap-6ae3f7db48e36" class="gmap"></div>
 		<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmOZX38IosoQhBXbJ0WvYLdZysvLYJuhA"></script>
 		<script type="text/javascript">
 			jQuery(document).ready(function ($) {
 				google.maps.event.addDomListener(window, 'load', init);
-				var map_6ae3f48c55095, gmarkers = new Object(), slick_6ae3f48c55093 = $("#slick_6ae3f48c55093"), default_marker_icon = '';
+				var map_6ae3f7db48e37, gmarkers = new Object(), slick_6ae3f7db48e33 = $("#slick_6ae3f7db48e33"), default_marker_icon = '';
 				function init() {
 					var mapOptions = {
 						zoomControlOptions: {
@@ -563,14 +563,14 @@ var FOOBOX = window.FOOBOX = {
 						scrollwheel: true,
 						styles: [{"featureType":"landscape","stylers":[{"hue":"#FFBB00"},{"saturation":43.400000000000006},{"lightness":37.599999999999994},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#FFC200"},{"saturation":-61.8},{"lightness":45.599999999999994},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":51.19999999999999},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":52},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#0078FF"},{"saturation":-13.200000000000003},{"lightness":2.4000000000000057},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#00FF6A"},{"saturation":-1.0989010989011234},{"lightness":11.200000000000017},{"gamma":1}]}]
 					};
-					var mapElement = document.getElementById('ulms-gmap-6ae3f48c55094');
-					map_6ae3f48c55095 = new google.maps.Map(mapElement, mapOptions);
+					var mapElement = document.getElementById('ulms-gmap-6ae3f7db48e36');
+					map_6ae3f7db48e37 = new google.maps.Map(mapElement, mapOptions);
 
-					slick_6ae3f48c55093.on('setPosition', function () {
+					slick_6ae3f7db48e33.on('setPosition', function () {
 						ulms_setMarkers();
 					});
 
-					slick_6ae3f48c55093.slick({
+					slick_6ae3f7db48e33.slick({
 						slidesToShow: 3,
 						slidesToScroll: 3,
 						arrows: true,
@@ -588,10 +588,10 @@ var FOOBOX = window.FOOBOX = {
 							}
 						]
 					});
-					$('#slick_6ae3f48c55093').on('mouseenter', '.slick-slide', function () {
+					$('#slick_6ae3f7db48e33').on('mouseenter', '.slick-slide', function () {
 						gmarkers[$(this).data('id')].setAnimation(google.maps.Animation.BOUNCE);
 					});
-					$('#slick_6ae3f48c55093').on('mouseleave', '.slick-slide', function () {
+					$('#slick_6ae3f7db48e33').on('mouseleave', '.slick-slide', function () {
 						gmarkers[$(this).data('id')].setAnimation(null);
 					});
 
@@ -599,7 +599,7 @@ var FOOBOX = window.FOOBOX = {
 				function ulms_setMarkers(){
 					var latlngbounds = new google.maps.LatLngBounds();
 					markers = new Object();
-					slick_6ae3f48c55093.find('.slick-slide.slick-active').each(function (i) {
+					slick_6ae3f7db48e33.find('.slick-slide.slick-active').each(function (i) {
 						markers[$(this).data('id')] = [parseFloat($(this).data('lat')), parseFloat($(this).data('lng')), $(this).data('title')];
 					});
 					$.each(gmarkers, function (index, value) {
@@ -610,35 +610,35 @@ var FOOBOX = window.FOOBOX = {
 						marker = new google.maps.Marker({
 							position: {lat: marker_array[0], lng: marker_array[1]},
 							icon: default_marker_icon,
-							map: map_6ae3f48c55095,
+							map: map_6ae3f7db48e37,
 							title: marker_array[2]
 						});
 						latlngbounds.extend(new google.maps.LatLng(marker_array[0], marker_array[1]));
 
 						marker.addListener('mouseover', function() {
 							var marker_title = this.getTitle();
-							slick_6ae3f48c55093.find('.slick-slide[data-title="' + marker_title + '"]').addClass('hovered');
+							slick_6ae3f7db48e33.find('.slick-slide[data-title="' + marker_title + '"]').addClass('hovered');
 						});
 
 						marker.addListener('mouseout', function() {
-							slick_6ae3f48c55093.find('.slick-slide').removeClass('hovered');
+							slick_6ae3f7db48e33.find('.slick-slide').removeClass('hovered');
 						});
 
 						gmarkers[index] = marker;
 					});
-					map_6ae3f48c55095.fitBounds(latlngbounds);
+					map_6ae3f7db48e37.fitBounds(latlngbounds);
 
-					google.maps.event.addListenerOnce(map_6ae3f48c55095, 'bounds_changed', function () {
-						offsetCenter(latlngbounds.getCenter(), 0, $("#map_6ae3f48c55095 .gmap_addresses").innerHeight());
+					google.maps.event.addListenerOnce(map_6ae3f7db48e37, 'bounds_changed', function () {
+						offsetCenter(latlngbounds.getCenter(), 0, $("#map_6ae3f7db48e37 .gmap_addresses").innerHeight());
 						if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ){
-							map_6ae3f48c55095.setZoom(map_6ae3f48c55095.getZoom() - 4 );
+							map_6ae3f7db48e37.setZoom(map_6ae3f7db48e37.getZoom() - 4 );
 						}else{
-							map_6ae3f48c55095.setZoom(map_6ae3f48c55095.getZoom() - 1 );
+							map_6ae3f7db48e37.setZoom(map_6ae3f7db48e37.getZoom() - 1 );
 						}
 					});
 				}
 				function offsetCenter(latlng,offsetx,offsety) {
-					map = map_6ae3f48c55095;
+					map = map_6ae3f7db48e37;
 					var scale = Math.pow(2, map.getZoom());
 					var nw = new google.maps.LatLng(
 						map.getBounds().getNorthEast().lat(),
@@ -662,9 +662,9 @@ var FOOBOX = window.FOOBOX = {
 		</script>
 		<div class="gmap_addresses">
 			<div class="container">
-				<div class="addresses" id="slick_6ae3f48c55093">
+				<div class="addresses" id="slick_6ae3f7db48e33">
 					
-<div data-id="address_id_6ae3f48c553ac" class="item" data-lat="38.436366" data-lng="27.144142" data-title="Retina Göz Merkezi">
+<div data-id="address_id_6ae3f7db4923d" class="item" data-lat="38.436366" data-lng="27.144142" data-title="Retina Göz Merkezi">
 	<div class="item_wr">
 					<div class="title">Retina Göz Merkezi</div>
 				<ul>
@@ -681,7 +681,7 @@ var FOOBOX = window.FOOBOX = {
 						<i class="fa fa-envelope-o"></i>
 					</div>
 					<div class="text">
-						<a href="mailto:&#115;ka&#121;&#110;ak&#64;&#114;et&#105;na-g&#109;.co&#109;">s&#107;a&#121;&#110;&#97;&#107;&#64;r&#101;&#116;ina&#45;&#103;&#109;.&#99;o&#109;</a>
+						<a href="mailto:sk&#97;yna&#107;&#64;&#114;&#101;ti&#110;&#97;-&#103;m&#46;&#99;&#111;m">ska&#121;&#110;ak&#64;&#114;et&#105;&#110;a&#45;g&#109;.&#99;&#111;m</a>
 					</div>
 				</li>
 										<li>

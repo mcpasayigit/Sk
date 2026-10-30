@@ -490,7 +490,7 @@ var FOOBOX = window.FOOBOX = {
 			<rs-module-wrap id="rev_slider_1_1_wrapper" data-source="gallery" style="visibility:hidden;background:transparent;padding:0;margin:0px auto;margin-top:0;margin-bottom:0;">
 				<rs-module id="rev_slider_1_1" style="" data-version="6.7.20">
 					<rs-slides style="overflow: hidden; position: absolute;">
-						<rs-slide style="position: absolute;" data-key="rs-1" data-title="Slide 1" data-invisible="true" data-anim="d:80;ms:1000;f:center;" data-filter="e:late2;b:3;" data-in="prst:rndany;o:0;x:cyc(-100%|0|100%);sx:cyc(1|0|1);sy:cyc(1|0|1);row:3;col:3;" class="overlay-2">
+						<rs-slide style="position: absolute;" data-key="rs-1" data-title="Slide 1" data-invisible="true" data-anim="f:nodelay;" data-filter="b:2;" data-in="prst:rndany;o:0;sx:1.2;sy:1.5;m:true;row:6;" class="overlay-2">
 							<img decoding="async" src="//suleymankaynak.com/wp-content/plugins/revslider/sr6/assets/assets/dummy.png" alt="" title="Homepage" class="rev-slidebg tp-rs-img rs-lazyload" data-lazyload="//suleymankaynak.com/wp-content/uploads/IMG_0618.jpg" data-no-retina>
 <!--
 							--><rs-layer
@@ -525,7 +525,7 @@ var FOOBOX = window.FOOBOX = {
 							>SüleymanKaynak 
 							</rs-layer><!--
 -->					</rs-slide>
-						<rs-slide style="position: absolute;" data-key="rs-11" data-title="Slide 1" data-invisible="true" data-anim="d:10;f:oppslidebased;" data-in="prst:rndany;o:0;sx:1.1;sy:1.1;m:true;row:6;col:6;" data-out="a:false;" class="overlay-2">
+						<rs-slide style="position: absolute;" data-key="rs-11" data-title="Slide 1" data-invisible="true" data-filter="e:late3;h:400;" data-in="prst:rndany;o:0;e:power1.in;" class="overlay-2">
 							<img decoding="async" src="//suleymankaynak.com/wp-content/plugins/revslider/sr6/assets/assets/dummy.png" alt="" title="Homepage" class="rev-slidebg tp-rs-img rs-lazyload" data-lazyload="//suleymankaynak.com/wp-content/uploads/IMG_0618.jpg" data-no-retina>
 <!--
 							--><rs-layer
@@ -604,13 +604,13 @@ var FOOBOX = window.FOOBOX = {
 	</div>
 
 </div></div></div></div><div data-vc-full-width="true" data-vc-full-width-init="false" data-vc-stretch-content="true" class="vc_row wpb_row vc_row-fluid vc_custom_1498178113401 vc_row-no-padding"><div class="wpb_animate_when_almost_visible wpb_fadeIn fadeIn wpb_column vc_column_container vc_col-sm-12"><div class="vc_column-inner "><div class="wpb_wrapper">
-	<div id="map_6ae3f4908e6c4" class="ulms_gmap_carousel ">
-		<div style="height: 420px;" id="ulms-gmap-6ae3f4908e6c3" class="gmap"></div>
+	<div id="map_6ae3f7e2175f6" class="ulms_gmap_carousel ">
+		<div style="height: 420px;" id="ulms-gmap-6ae3f7e2175f5" class="gmap"></div>
 		<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmOZX38IosoQhBXbJ0WvYLdZysvLYJuhA"></script>
 		<script type="text/javascript">
 			jQuery(document).ready(function ($) {
 				google.maps.event.addDomListener(window, 'load', init);
-				var map_6ae3f4908e6c4, gmarkers = new Object(), slick_6ae3f4908e6c2 = $("#slick_6ae3f4908e6c2"), default_marker_icon = '';
+				var map_6ae3f7e2175f6, gmarkers = new Object(), slick_6ae3f7e2175f4 = $("#slick_6ae3f7e2175f4"), default_marker_icon = '';
 				function init() {
 					var mapOptions = {
 						zoomControlOptions: {
@@ -620,14 +620,14 @@ var FOOBOX = window.FOOBOX = {
 						scrollwheel: true,
 						styles: [{"featureType":"landscape","stylers":[{"hue":"#FFBB00"},{"saturation":43.400000000000006},{"lightness":37.599999999999994},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#FFC200"},{"saturation":-61.8},{"lightness":45.599999999999994},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":51.19999999999999},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":52},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#0078FF"},{"saturation":-13.200000000000003},{"lightness":2.4000000000000057},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#00FF6A"},{"saturation":-1.0989010989011234},{"lightness":11.200000000000017},{"gamma":1}]}]
 					};
-					var mapElement = document.getElementById('ulms-gmap-6ae3f4908e6c3');
-					map_6ae3f4908e6c4 = new google.maps.Map(mapElement, mapOptions);
+					var mapElement = document.getElementById('ulms-gmap-6ae3f7e2175f5');
+					map_6ae3f7e2175f6 = new google.maps.Map(mapElement, mapOptions);
 
-					slick_6ae3f4908e6c2.on('setPosition', function () {
+					slick_6ae3f7e2175f4.on('setPosition', function () {
 						ulms_setMarkers();
 					});
 
-					slick_6ae3f4908e6c2.slick({
+					slick_6ae3f7e2175f4.slick({
 						slidesToShow: 3,
 						slidesToScroll: 3,
 						arrows: true,
@@ -645,10 +645,10 @@ var FOOBOX = window.FOOBOX = {
 							}
 						]
 					});
-					$('#slick_6ae3f4908e6c2').on('mouseenter', '.slick-slide', function () {
+					$('#slick_6ae3f7e2175f4').on('mouseenter', '.slick-slide', function () {
 						gmarkers[$(this).data('id')].setAnimation(google.maps.Animation.BOUNCE);
 					});
-					$('#slick_6ae3f4908e6c2').on('mouseleave', '.slick-slide', function () {
+					$('#slick_6ae3f7e2175f4').on('mouseleave', '.slick-slide', function () {
 						gmarkers[$(this).data('id')].setAnimation(null);
 					});
 
@@ -656,7 +656,7 @@ var FOOBOX = window.FOOBOX = {
 				function ulms_setMarkers(){
 					var latlngbounds = new google.maps.LatLngBounds();
 					markers = new Object();
-					slick_6ae3f4908e6c2.find('.slick-slide.slick-active').each(function (i) {
+					slick_6ae3f7e2175f4.find('.slick-slide.slick-active').each(function (i) {
 						markers[$(this).data('id')] = [parseFloat($(this).data('lat')), parseFloat($(this).data('lng')), $(this).data('title')];
 					});
 					$.each(gmarkers, function (index, value) {
@@ -667,35 +667,35 @@ var FOOBOX = window.FOOBOX = {
 						marker = new google.maps.Marker({
 							position: {lat: marker_array[0], lng: marker_array[1]},
 							icon: default_marker_icon,
-							map: map_6ae3f4908e6c4,
+							map: map_6ae3f7e2175f6,
 							title: marker_array[2]
 						});
 						latlngbounds.extend(new google.maps.LatLng(marker_array[0], marker_array[1]));
 
 						marker.addListener('mouseover', function() {
 							var marker_title = this.getTitle();
-							slick_6ae3f4908e6c2.find('.slick-slide[data-title="' + marker_title + '"]').addClass('hovered');
+							slick_6ae3f7e2175f4.find('.slick-slide[data-title="' + marker_title + '"]').addClass('hovered');
 						});
 
 						marker.addListener('mouseout', function() {
-							slick_6ae3f4908e6c2.find('.slick-slide').removeClass('hovered');
+							slick_6ae3f7e2175f4.find('.slick-slide').removeClass('hovered');
 						});
 
 						gmarkers[index] = marker;
 					});
-					map_6ae3f4908e6c4.fitBounds(latlngbounds);
+					map_6ae3f7e2175f6.fitBounds(latlngbounds);
 
-					google.maps.event.addListenerOnce(map_6ae3f4908e6c4, 'bounds_changed', function () {
-						offsetCenter(latlngbounds.getCenter(), 0, $("#map_6ae3f4908e6c4 .gmap_addresses").innerHeight());
+					google.maps.event.addListenerOnce(map_6ae3f7e2175f6, 'bounds_changed', function () {
+						offsetCenter(latlngbounds.getCenter(), 0, $("#map_6ae3f7e2175f6 .gmap_addresses").innerHeight());
 						if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ){
-							map_6ae3f4908e6c4.setZoom(map_6ae3f4908e6c4.getZoom() - 4 );
+							map_6ae3f7e2175f6.setZoom(map_6ae3f7e2175f6.getZoom() - 4 );
 						}else{
-							map_6ae3f4908e6c4.setZoom(map_6ae3f4908e6c4.getZoom() - 1 );
+							map_6ae3f7e2175f6.setZoom(map_6ae3f7e2175f6.getZoom() - 1 );
 						}
 					});
 				}
 				function offsetCenter(latlng,offsetx,offsety) {
-					map = map_6ae3f4908e6c4;
+					map = map_6ae3f7e2175f6;
 					var scale = Math.pow(2, map.getZoom());
 					var nw = new google.maps.LatLng(
 						map.getBounds().getNorthEast().lat(),
@@ -719,9 +719,9 @@ var FOOBOX = window.FOOBOX = {
 		</script>
 		<div class="gmap_addresses">
 			<div class="container">
-				<div class="addresses" id="slick_6ae3f4908e6c2">
+				<div class="addresses" id="slick_6ae3f7e2175f4">
 					
-<div data-id="address_id_6ae3f4908ee0d" class="item" data-lat="38.436366" data-lng="27.144142" data-title="Retina Göz Merkezi">
+<div data-id="address_id_6ae3f7e217b77" class="item" data-lat="38.436366" data-lng="27.144142" data-title="Retina Göz Merkezi">
 	<div class="item_wr">
 					<div class="title">Retina Göz Merkezi</div>
 				<ul>
@@ -738,7 +738,7 @@ var FOOBOX = window.FOOBOX = {
 						<i class="fa fa-envelope-o"></i>
 					</div>
 					<div class="text">
-						<a href="mailto:ska&#121;&#110;ak&#64;&#114;&#101;t&#105;n&#97;&#45;gm&#46;c&#111;&#109;">sk&#97;yna&#107;&#64;&#114;et&#105;n&#97;-&#103;&#109;.&#99;&#111;m</a>
+						<a href="mailto:&#115;k&#97;&#121;&#110;&#97;&#107;&#64;r&#101;t&#105;&#110;a-gm&#46;c&#111;&#109;">s&#107;ay&#110;&#97;&#107;&#64;r&#101;&#116;&#105;&#110;a&#45;g&#109;&#46;&#99;&#111;&#109;</a>
 					</div>
 				</li>
 										<li>
