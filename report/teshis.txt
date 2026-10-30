@@ -1,0 +1,137 @@
+# Bağlantı tanısı: suleymankaynak.com (2026-10-30 01:31:40 UTC)
+## DNS
+-- A
+185.216.113.152
+-- AAAA
+-- NS
+ns1.pasayigit.company.
+ns2.pasayigit.company.
+-- MX
+0 suleymankaynak.com.
+-- www
+suleymankaynak.com.
+185.216.113.152
+## TCP (185.216.113.152)
+185.216.113.152:80 açık
+185.216.113.152:443 açık
+## HTTP başlıkları
+HTTP/1.1 301 Moved Permanently
+Connection: Keep-Alive
+Keep-Alive: timeout=5, max=100
+Content-Type: text/html
+Content-Length: 795
+Date: Fri, 30 Oct 2026 01:31:43 GMT
+Server: LiteSpeed
+Location: https://suleymankaynak.com/
+X-Powered-By: PleskLin
+
+## HTTPS (varsayılan)
+* Host suleymankaynak.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 185.216.113.152
+*   Trying 185.216.113.152:443...
+* Connected to suleymankaynak.com (185.216.113.152) port 443
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+*  CAfile: /etc/ssl/certs/ca-certificates.crt
+*  CApath: /etc/ssl/certs
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [100 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [4096 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+{ [300 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+{ [4 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+} [37 bytes data]
+* TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+} [16 bytes data]
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+{ [16 bytes data]
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256 / X25519 / RSASSA-PSS
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=suleymankaynak.com
+*  start date: Oct  1 10:18:57 2026 GMT
+*  expire date: Dec 30 10:18:56 2026 GMT
+*  subjectAltName: host "suleymankaynak.com" matched cert's "suleymankaynak.com"
+*  issuer: C=US; O=Let's Encrypt; CN=YR2
+*  SSL certificate verify ok.
+*   Certificate level 0: Public key type RSA (2048/112 Bits/secBits), signed using sha256WithRSAEncryption
+*   Certificate level 1: Public key type RSA (2048/112 Bits/secBits), signed using sha256WithRSAEncryption
+*   Certificate level 2: Public key type RSA (4096/152 Bits/secBits), signed using sha256WithRSAEncryption
+## HTTPS (yalnızca TLS 1.2)
+* Host suleymankaynak.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 185.216.113.152
+*   Trying 185.216.113.152:443...
+* Connected to suleymankaynak.com (185.216.113.152) port 443
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client hello (1):
+} [224 bytes data]
+*  CAfile: /etc/ssl/certs/ca-certificates.crt
+*  CApath: /etc/ssl/certs
+* Connection timed out after 20002 milliseconds
+* Closing connection
+curl: (28) Connection timed out after 20002 milliseconds
+## openssl
+-- -tls1_3
+40778DDA057F0000:error:0A00042E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version:../ssl/record/rec_layer_s3.c:1599:SSL alert number 70
+CONNECTED(00000003)
+---
+no peer certificate available
+---
+No client certificate CA names sent
+---
+SSL handshake has read 7 bytes and written 252 bytes
+Verification: OK
+---
+New, (NONE), Cipher is (NONE)
+Secure Renegotiation IS NOT supported
+Compression: NONE
+Expansion: NONE
+-- -tls1_2
+depth=3 C = US, O = Internet Security Research Group, CN = ISRG Root X1
+verify return:1
+depth=2 C = US, O = ISRG, CN = Root YR
+verify return:1
+depth=1 C = US, O = Let's Encrypt, CN = YR2
+verify return:1
+depth=0 CN = suleymankaynak.com
+verify return:1
+CONNECTED(00000003)
+---
+Certificate chain
+ 0 s:CN = suleymankaynak.com
+   i:C = US, O = Let's Encrypt, CN = YR2
+   a:PKEY: rsaEncryption, 2048 (bit); sigalg: RSA-SHA256
+## www HTTPS
+* Host www.suleymankaynak.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 185.216.113.152
+*   Trying 185.216.113.152:443...
+* Connected to www.suleymankaynak.com (185.216.113.152) port 443
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+*  CAfile: /etc/ssl/certs/ca-certificates.crt
+*  CApath: /etc/ssl/certs
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [100 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [4096 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+{ [300 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+{ [4 bytes data]
+## karşılaştırma: retina-gm.com HTTPS
+kod=200 tcp=0.549081s tls=0.920651s
