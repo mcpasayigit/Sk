@@ -17,6 +17,10 @@ on:
         description: Yalnızca bu kadar dosyayı dene (0 = hepsi)
         required: false
         default: "0"
+      bekle:
+        description: IP boşsa, geçerli SSL sertifikası gelene kadar en çok kaç dakika beklensin (0 = bekleme)
+        required: false
+        default: "0"
 
 permissions:
   contents: read
@@ -29,6 +33,7 @@ jobs:
       HOST: ${{ github.event.inputs.host || 'suleymankaynak.com' }}
       IP: ${{ github.event.inputs.ip }}
       LIMIT: ${{ github.event.inputs.limit || '0' }}
+      WAIT: ${{ github.event.inputs.bekle || '0' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,6 +59,23 @@ jobs:
           for t in A NS MX TXT; do ann "$t" "$HOST" "$t"; done
           ann www "www.$HOST"
           ann mail "mail.$HOST"
+
+      - name: Geçerli sertifika için bekle
+        if: ${{ env.IP == '' && env.WAIT != '0' }}
+        run: |
+          [[ "$WAIT" =~ ^[0-9]{1,2}$ ]] || { echo "bekle bir sayı olmalı"; exit 1; }
+          end=$(( $(date +%s) + WAIT * 60 ))
+          while true; do
+            err="$(curl -sS -m 20 -o /dev/null "https://$HOST/" 2>&1)" && {
+              echo "::notice title=Sertifika::https://$HOST/ geçerli sertifikayla açılıyor"
+              break
+            }
+            if [ "$(date +%s)" -ge "$end" ]; then
+              echo "::warning title=Sertifika::$WAIT dakikada geçerli sertifika gelmedi: $err"
+              break
+            fi
+            sleep 20
+          done
 
       - name: Siteyi karşılaştır
         run: |
