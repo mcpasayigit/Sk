@@ -9,6 +9,8 @@
 | Görseller | 2170 görsel çözümlendi, bozuk ya da kesik yok |
 | Tarayıcı (Chromium, kopyadan sunularak) | 42 sayfanın 42'si açıldı, içeriği dolu, JavaScript istisnası yok, site dışına atan sayfa yok |
 | Galeri ve sertifika sayfaları | `/galeriler/` (176 görsel), `/gallery/` (163), `/sertifikalar/` (441) görselleriyle yükleniyor |
+| Kurulum denemesi (yerel Apache, https) | `.cpanel.yml` görevleri ve `deploy/htaccess` ile kurulan kopyada **Canlı kontrol** betiği: 2485 dosyanın 2485'i bayt bayt aynı, 6 davranış kontrolünün 6'sı tamam (olmayan sayfa 404, http→https, www→çıplak alan adı, eğik çizgi yönlendirmesi, depo dosyaları gizli) |
+| 404 sayfası | Sitenin kendi 404 sayfası alındı (`site/404.html`, 52909 bayt, dış script içermiyor) |
 | Kendi alan adına `http://` ile başvurular | 581 görsel (tarayıcı bunları otomatik `https`e çeviriyor) ve 4 pdf gömme (`object`) başvurusu (orijinal sitede de aynı). CSS ve JS için `http://` başvurusu yok |
 
 ## Orijinal sitede de bozuk olanlar (kopya hatası değil)

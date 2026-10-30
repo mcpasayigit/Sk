@@ -114,10 +114,15 @@ def type_ok(expected, got):
 def check_entry(cfg, url, rec):
     """(durum, url, ayrıntı) döndürür; sorun yoksa None. Tür uyarısı için ('uyari', ...)."""
     path = urllib.parse.urlsplit(url).path or "/"
-    alias = "alias_of" in rec
+    f = rec.get("file", "")
+    alias = "alias_of" in rec and f.endswith("index.html")
     if alias:                      # özgün sunucu başka adrese yönlendiriyordu; kopyada küçük bir yönlendirme sayfası var
         path = path.rstrip("/") + "/"
     st, hd, body, err = fetch_retry(cfg, path)
+    if not alias and st in (301, 308) and not path.endswith("/") and f == path.strip("/") + "/index.html":
+        # klasör sayfası eğik çizgisiz istendi: sunucunun eğik çizgili adrese yönlendirmesi beklenen davranış
+        if urllib.parse.urlsplit(hd.get("location", "")).path == path + "/":
+            st, hd, body, err = fetch_retry(cfg, path + "/")
     if err:
         return ("hata", url, err)
     if st != 200:
