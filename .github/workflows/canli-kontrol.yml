@@ -21,6 +21,10 @@ on:
         description: IP boşsa, geçerli SSL sertifikası gelene kadar en çok kaç dakika beklensin (0 = bekleme)
         required: false
         default: "0"
+      beklenen_ip:
+        description: Bekleme sırasında siteye bu IP'den bağlanılana kadar bekle (DNS yeni sunucuya dönene kadar eski sunucuyu denemesin diye)
+        required: false
+        default: ""
       http:
         description: "Ön kontrol: yalnızca HTTP (80) ile doğrula. Sertifika yokken, DNS çevrilmeden önce kullan (IP yaz)"
         type: boolean
@@ -39,6 +43,7 @@ jobs:
       IP: ${{ github.event.inputs.ip }}
       LIMIT: ${{ github.event.inputs.limit || '0' }}
       WAIT: ${{ github.event.inputs.bekle || '0' }}
+      EXPECT_IP: ${{ github.event.inputs.beklenen_ip }}
       HTTP_ONLY: ${{ github.event.inputs.http }}
     steps:
       - uses: actions/checkout@v4
@@ -49,6 +54,30 @@ jobs:
             /site/404.html
           sparse-checkout-cone-mode: false
 
+      - name: Geçerli sertifika için bekle
+        if: ${{ env.IP == '' && env.WAIT != '0' && env.HTTP_ONLY != 'true' }}
+        run: |
+          [[ "$WAIT" =~ ^[0-9]{1,2}$ ]] || { echo "bekle bir sayı olmalı"; exit 1; }
+          [[ -z "$EXPECT_IP" || "$EXPECT_IP" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]] || { echo "beklenen_ip geçersiz"; exit 1; }
+          end=$(( $(date +%s) + WAIT * 60 ))
+          while true; do
+            got="$(curl -sS -m 20 -o /dev/null -w '%{remote_ip}' "https://$HOST/" 2>&1)" && rc=0 || rc=$?
+            if [ "$rc" -eq 0 ] && { [ -z "$EXPECT_IP" ] || [ "$got" = "$EXPECT_IP" ]; }; then
+              echo "::notice title=Sertifika::https://$HOST/ geçerli sertifikayla açılıyor (bağlanılan IP: $got)"
+              break
+            fi
+            if [ "$rc" -eq 0 ]; then
+              err="DNS henüz beklenen sunucuyu göstermiyor (bağlanılan: $got, beklenen: $EXPECT_IP)"
+            else
+              err="$(printf '%s' "$got" | tr '\n' ' ' | sed 's/%/%25/g')"
+            fi
+            if [ "$(date +%s)" -ge "$end" ]; then
+              echo "::warning title=Sertifika::$WAIT dakikada hazır olmadı: $err"
+              break
+            fi
+            sleep 20
+          done
+
       - name: DNS kayıtları
         run: |
           command -v dig >/dev/null || sudo apt-get install -y -qq dnsutils >/dev/null
@@ -56,32 +85,19 @@ jobs:
             echo "### DNS kayıtları ($HOST)"
             echo '```'
             for t in A NS MX TXT; do echo "== $t"; dig +short "$HOST" "$t"; done
+            echo "== A (1.1.1.1)"; dig +short "$HOST" A @1.1.1.1
+            echo "== A (8.8.8.8)"; dig +short "$HOST" A @8.8.8.8
             echo "== www"; dig +short "www.$HOST"
             echo "== mail"; dig +short "mail.$HOST"
             echo '```'
           } | tee -a "$GITHUB_STEP_SUMMARY"
           # Aynı kayıtlar Actions'ın "Annotations" bölümünde de görünsün
-          ann() { printf '::notice title=DNS %s::%s\n' "$1" "$(dig +short "$2" ${3:+"$3"} | tr '\n' ' ' | sed 's/%/%25/g')"; }
+          ann() { printf '::notice title=DNS %s::%s\n' "$1" "$(dig +short "$2" ${3:+"$3"} ${4:+"$4"} | tr '\n' ' ' | sed 's/%/%25/g')"; }
           for t in A NS MX TXT; do ann "$t" "$HOST" "$t"; done
+          ann "A 1.1.1.1" "$HOST" A @1.1.1.1
+          ann "A 8.8.8.8" "$HOST" A @8.8.8.8
           ann www "www.$HOST"
           ann mail "mail.$HOST"
-
-      - name: Geçerli sertifika için bekle
-        if: ${{ env.IP == '' && env.WAIT != '0' && env.HTTP_ONLY != 'true' }}
-        run: |
-          [[ "$WAIT" =~ ^[0-9]{1,2}$ ]] || { echo "bekle bir sayı olmalı"; exit 1; }
-          end=$(( $(date +%s) + WAIT * 60 ))
-          while true; do
-            err="$(curl -sS -m 20 -o /dev/null "https://$HOST/" 2>&1)" && {
-              echo "::notice title=Sertifika::https://$HOST/ geçerli sertifikayla açılıyor"
-              break
-            }
-            if [ "$(date +%s)" -ge "$end" ]; then
-              echo "::warning title=Sertifika::$WAIT dakikada geçerli sertifika gelmedi: $err"
-              break
-            fi
-            sleep 20
-          done
 
       - name: Siteyi karşılaştır
         run: |
