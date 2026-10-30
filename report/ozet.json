@@ -1,8 +1,243 @@
 {
- "ok": false,
+ "ok": true,
  "site": "https://suleymankaynak.com",
  "ips": [
   "185.216.113.152"
  ],
- "error": "URLError: <urlopen error _ssl.c:983: The handshake operation timed out>"
+ "files": 2485,
+ "bytes": 1112501452,
+ "categories": {
+  "diğer": 9,
+  "HTML sayfa": 191,
+  "doküman/arşiv": 17,
+  "görsel": 2178,
+  "CSS": 28,
+  "JS": 30,
+  "font": 31
+ },
+ "sitemap_total": 42,
+ "sitemap_missing": [],
+ "failed": {
+  "https://suleymankaynak.com/dogru-gozluk-kullanimi-2/&title=DO%C4%9ERU%20G%C3%96ZL%C3%9CK%20KULLANIMI": "HTTP 404",
+  "https://suleymankaynak.com/dogru-gozluk-kullanimi/&title=DO%C4%9ERU%20G%C3%96ZL%C3%9CK%20KULLANIMI": "HTTP 404",
+  "https://suleymankaynak.com/galeri/asrs-toplantisi-usa-2014": "HTTP 404",
+  "https://suleymankaynak.com/galeri/bsos-toplantisi-tiflis-2013": "HTTP 404",
+  "https://suleymankaynak.com/galeri/ebo-sinavi-paris-2008": "HTTP 404",
+  "https://suleymankaynak.com/galeri/ebo-sinavi-paris-2013": "HTTP 404",
+  "https://suleymankaynak.com/galeri/galeri1": "HTTP 404",
+  "https://suleymankaynak.com/galeri/londra-avam-kamarasi-konusma-2013": "HTTP 404",
+  "https://suleymankaynak.com/galeri/panhellenic-toplantisi-yunanistan-2011": "HTTP 404",
+  "https://suleymankaynak.com/galeri/tod-mart-sempozyumu-2013": "HTTP 404",
+  "https://suleymankaynak.com/galeri/tod-nisan-kursu-ankara-2009": "HTTP 404",
+  "https://suleymankaynak.com/galeri/tod-nisan-kursu-ankara-2012": "HTTP 404",
+  "https://suleymankaynak.com/galeri/woc-2014-tokyo": "HTTP 404",
+  "https://suleymankaynak.com/goz-hastaliklari-2/&title=G%C3%96Z%20HASTALIKLARI": "HTTP 404",
+  "https://suleymankaynak.com/goz-hastaliklari/&title=G%C3%96Z%20HASTALIKLARI": "HTTP 404",
+  "https://suleymankaynak.com/goz-muayenesi-2/&title=G%C3%96Z%20MUAYENES%C4%B0": "HTTP 404",
+  "https://suleymankaynak.com/goz-muayenesi/&title=G%C3%96Z%20MUAYENES%C4%B0": "HTTP 404",
+  "https://suleymankaynak.com/goz-seyirmesi-2/&title=G%C3%96Z%20SEY%C4%B0RMES%C4%B0": "HTTP 404",
+  "https://suleymankaynak.com/goz-seyirmesi/&title=G%C3%96Z%20SEY%C4%B0RMES%C4%B0": "HTTP 404",
+  "https://suleymankaynak.com/katarakt-nedir-2/&title=KATARAKT%20NED%C4%B0R": "HTTP 404",
+  "https://suleymankaynak.com/katarakt-nedir/&title=KATARAKT%20NED%C4%B0R": "HTTP 404",
+  "https://suleymankaynak.com/katarakt-tedavisi/&title=KATARAKT%20TEDAV%C4%B0S%C4%B0": "HTTP 404",
+  "https://suleymankaynak.com/miyopi-2/&title=M%C4%B0YOP%C4%B0": "HTTP 404",
+  "https://suleymankaynak.com/miyopi/&title=M%C4%B0YOP%C4%B0": "HTTP 404",
+  "https://suleymankaynak.com/resim/uyeliklervegorevler.pdf": "HTTP 404",
+  "https://suleymankaynak.com/resimler/basindan.png": "HTTP 404",
+  "https://suleymankaynak.com/wp-content": "yönlendirme hedefi kopyalanmıyor: klasör adresi (dosya değil)",
+  "https://suleymankaynak.com/wp-content/plugins": "yönlendirme hedefi kopyalanmıyor: klasör adresi (dosya değil)",
+  "https://suleymankaynak.com/wp-content/plugins/lightview-plus/css/lightview/lightview.css": "HTTP 404",
+  "https://suleymankaynak.com/wp-content/plugins/lightview-plus/js/lightview/lightview.js": "HTTP 404",
+  "https://suleymankaynak.com/wp-content/plugins/lightview-plus/js/spinners/spinners.min.js": "HTTP 404",
+  "https://suleymankaynak.com/wp-content/themes/images/bg-input-focus.png": "HTTP 404",
+  "https://suleymankaynak.com/wp-content/themes/images/bg-input.png": "HTTP 404",
+  "https://suleymankaynak.com/wp-content/uploads/runa-uploads": "HTTP 404",
+  "https://suleymankaynak.com/yazi-3-2/&title=G%C3%96Z%20D%C4%B0B%C4%B0%20MUAYENES%C4%B0N%C4%B0N%20%C3%96NEM%C4%B0": "HTTP 404",
+  "https://suleymankaynak.com/yazi-3/&title=G%C3%96Z%20D%C4%B0B%C4%B0%20MUAYENES%C4%B0N%C4%B0N%20%C3%96NEM%C4%B0": "HTTP 404"
+ },
+ "missing_refs": {
+  "https://suleymankaynak.com/dogru-gozluk-kullanimi-2/&title=DO%C4%9ERU%20G%C3%96ZL%C3%9CK%20KULLANIMI": [
+   "dogru-gozluk-kullanimi-2/index.html"
+  ],
+  "https://suleymankaynak.com/dogru-gozluk-kullanimi/&title=DO%C4%9ERU%20G%C3%96ZL%C3%9CK%20KULLANIMI": [
+   "dogru-gozluk-kullanimi/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/asrs-toplantisi-usa-2014": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/bsos-toplantisi-tiflis-2013": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/ebo-sinavi-paris-2008": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/ebo-sinavi-paris-2013": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/galeri1": [
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/londra-avam-kamarasi-konusma-2013": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/panhellenic-toplantisi-yunanistan-2011": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/tod-mart-sempozyumu-2013": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/tod-nisan-kursu-ankara-2009": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/tod-nisan-kursu-ankara-2012": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/galeri/woc-2014-tokyo": [
+   "galeriler/index.html",
+   "gallery/index.html"
+  ],
+  "https://suleymankaynak.com/goz-hastaliklari-2/&title=G%C3%96Z%20HASTALIKLARI": [
+   "goz-hastaliklari-2/index.html"
+  ],
+  "https://suleymankaynak.com/goz-hastaliklari/&title=G%C3%96Z%20HASTALIKLARI": [
+   "goz-hastaliklari/index.html"
+  ],
+  "https://suleymankaynak.com/goz-muayenesi-2/&title=G%C3%96Z%20MUAYENES%C4%B0": [
+   "goz-muayenesi-2/index.html"
+  ],
+  "https://suleymankaynak.com/goz-muayenesi/&title=G%C3%96Z%20MUAYENES%C4%B0": [
+   "goz-muayenesi/index.html"
+  ],
+  "https://suleymankaynak.com/goz-seyirmesi-2/&title=G%C3%96Z%20SEY%C4%B0RMES%C4%B0": [
+   "goz-seyirmesi-2/index.html"
+  ],
+  "https://suleymankaynak.com/goz-seyirmesi/&title=G%C3%96Z%20SEY%C4%B0RMES%C4%B0": [
+   "goz-seyirmesi/index.html"
+  ],
+  "https://suleymankaynak.com/katarakt-nedir-2/&title=KATARAKT%20NED%C4%B0R": [
+   "katarakt-nedir-2/index.html"
+  ],
+  "https://suleymankaynak.com/katarakt-nedir/&title=KATARAKT%20NED%C4%B0R": [
+   "katarakt-nedir/index.html"
+  ],
+  "https://suleymankaynak.com/katarakt-tedavisi/&title=KATARAKT%20TEDAV%C4%B0S%C4%B0": [
+   "katarakt-tedavisi/index.html"
+  ],
+  "https://suleymankaynak.com/miyopi-2/&title=M%C4%B0YOP%C4%B0": [
+   "miyopi-2/index.html"
+  ],
+  "https://suleymankaynak.com/miyopi/&title=M%C4%B0YOP%C4%B0": [
+   "miyopi/index.html"
+  ],
+  "https://suleymankaynak.com/resim/uyeliklervegorevler.pdf": [
+   "memberships-and-duties/index.html"
+  ],
+  "https://suleymankaynak.com/resimler/basindan.png": [
+   "basindan-secmeler/index.html",
+   "press/index.html"
+  ],
+  "https://suleymankaynak.com/wp-content": [
+   "sertifikalar/index.html",
+   "sertifikalar/nggallery/slideshow/index.html",
+   "sertifikalar/nggallery/thumbnails/index.html"
+  ],
+  "https://suleymankaynak.com/wp-content/plugins": [
+   "sertifikalar/index.html",
+   "sertifikalar/nggallery/slideshow/index.html",
+   "sertifikalar/nggallery/thumbnails/index.html"
+  ],
+  "https://suleymankaynak.com/wp-content/plugins/lightview-plus/css/lightview/lightview.css": [
+   "about-me/index.html",
+   "atif-listesi/index.html",
+   "basindan-secmeler/index.html"
+  ],
+  "https://suleymankaynak.com/wp-content/plugins/lightview-plus/js/lightview/lightview.js": [
+   "about-me/index.html",
+   "atif-listesi/index.html",
+   "basindan-secmeler/index.html"
+  ],
+  "https://suleymankaynak.com/wp-content/plugins/lightview-plus/js/spinners/spinners.min.js": [
+   "about-me/index.html",
+   "atif-listesi/index.html",
+   "basindan-secmeler/index.html"
+  ],
+  "https://suleymankaynak.com/wp-content/themes/images/bg-input-focus.png": [
+   "wp-content/themes/profkaynak/style.css"
+  ],
+  "https://suleymankaynak.com/wp-content/themes/images/bg-input.png": [
+   "wp-content/themes/profkaynak/style.css"
+  ],
+  "https://suleymankaynak.com/wp-content/uploads/runa-uploads": [
+   "about-me/index.html",
+   "atif-listesi/index.html",
+   "basindan-secmeler/index.html"
+  ],
+  "https://suleymankaynak.com/yazi-3-2/&title=G%C3%96Z%20D%C4%B0B%C4%B0%20MUAYENES%C4%B0N%C4%B0N%20%C3%96NEM%C4%B0": [
+   "yazi-3-2/index.html"
+  ],
+  "https://suleymankaynak.com/yazi-3/&title=G%C3%96Z%20D%C4%B0B%C4%B0%20MUAYENES%C4%B0N%C4%B0N%20%C3%96NEM%C4%B0": [
+   "yazi-3/index.html"
+  ]
+ },
+ "skipped": {
+  "dinamik uç (php / wp-admin / feed / api)": 418,
+  "sorgu parametreli sayfa": 38,
+  "klasör adresi (dosya değil)": 3,
+  "şablon/desen (gerçek adres değil)": 4
+ },
+ "empty_files": {
+  "https://suleymankaynak.com/wp-content/plugins/responsive-lightbox/font/responsive-lightbox.svg": {
+   "Content-Length": "0",
+   "Content-Type": "image/svg+xml",
+   "Last-Modified": "Sun, 09 Aug 2026 11:25:36 GMT"
+  }
+ },
+ "oversize": {},
+ "collisions": 0,
+ "flags": [],
+ "external_hosts": {
+  "gmpg.org": 191,
+  "fonts.googleapis.com": 384,
+  "line.storerightdesicion.com": 2,
+  "refer.specialadves.com": 9,
+  "maps.googleapis.com": 2,
+  "www.google.com": 1,
+  "docs.google.com": 4,
+  "cdn.demo.runathemes.com": 1,
+  "gozsagligi.todnet.org": 2
+ },
+ "unknown_external_hosts": [
+  "gmpg.org",
+  "refer.specialadves.com",
+  "line.storerightdesicion.com"
+ ],
+ "findings": [
+  {
+   "file": "curriculum-vitae/index.html",
+   "pattern": "spam anahtar kelime",
+   "count": 3,
+   "sample": " Prof. Dr. İlhan Günalp. He achieved specialisation degree from Ankara University, Faculty of Medicine, Op"
+  },
+  {
+   "file": "curriculum-vitae-2/index.html",
+   "pattern": "spam anahtar kelime",
+   "count": 3,
+   "sample": " Prof. Dr. İlhan Günalp. He achieved specialisation degree from Ankara University, Faculty of Medicine, Op"
+  }
+ ],
+ "http_self_refs": 1569,
+ "pages_not_in_sitemap": [
+  "https://suleymankaynak.com/blog-2/page/2/",
+  "https://suleymankaynak.com/sertifikalar/nggallery/slideshow",
+  "https://suleymankaynak.com/sertifikalar/nggallery/thumbnails"
+ ]
 }
