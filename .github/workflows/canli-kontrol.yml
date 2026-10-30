@@ -1,0 +1,53 @@
+name: Canlı kontrol
+
+# Siteyi sunucudan çekip repodaki kopyayla bayt bayt karşılaştırır (scripts/verify_live.py).
+# IP yazarsan DNS'i değiştirmeden o sunucu denenir; boş bırakırsan DNS'in gösterdiği sunucu denenir.
+on:
+  workflow_dispatch:
+    inputs:
+      ip:
+        description: Yeni sunucunun IP adresi (boş bırakırsan DNS'in gösterdiği sunucu kontrol edilir)
+        required: false
+        default: ""
+      host:
+        description: Alan adı
+        required: false
+        default: suleymankaynak.com
+
+permissions:
+  contents: read
+
+jobs:
+  kontrol:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      HOST: ${{ github.event.inputs.host || 'suleymankaynak.com' }}
+      IP: ${{ github.event.inputs.ip }}
+      LIMIT: "0"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /scripts/
+            /report/
+            /site/404.html
+          sparse-checkout-cone-mode: false
+
+      - name: DNS kayıtları
+        run: |
+          command -v dig >/dev/null || sudo apt-get install -y -qq dnsutils >/dev/null
+          {
+            echo "### DNS kayıtları ($HOST)"
+            echo '```'
+            for t in A NS MX TXT; do echo "== $t"; dig +short "$HOST" "$t"; done
+            echo "== www"; dig +short "www.$HOST"
+            echo "== mail"; dig +short "mail.$HOST"
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Siteyi karşılaştır
+        run: |
+          args=(--host "$HOST" --limit "$LIMIT")
+          if [ -n "$IP" ]; then args+=(--ip "$IP"); fi
+          python3 scripts/verify_live.py "${args[@]}"

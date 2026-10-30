@@ -1,0 +1,52 @@
+name: Siteyi kopyala
+
+on:
+  workflow_dispatch:
+    inputs:
+      site_url:
+        description: Kopyalanacak adres
+        default: https://suleymankaynak.com
+  push:
+    branches: [main]
+    paths:
+      - scripts/mirror.py
+      - scripts/commit_chunks.py
+      - .github/workflows/mirror.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mirror
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      SITE_URL: ${{ github.event.inputs.site_url || 'https://suleymankaynak.com' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Siteyi indir
+        env:
+          WORKERS: "12"
+          DELAY: "0.02"
+          MAX_SECONDS: "10800"
+          MAX_PAGES: "3000"
+          PROGRESS_PUSH: "1"
+          PROGRESS_EVERY: "45"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 scripts/mirror.py
+
+      - name: Repoya kaydet
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p site report
+          du -sh site || true
+          python3 scripts/commit_chunks.py
