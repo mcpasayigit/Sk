@@ -13,6 +13,10 @@ on:
         description: Alan adı
         required: false
         default: suleymankaynak.com
+      limit:
+        description: Yalnızca bu kadar dosyayı dene (0 = hepsi)
+        required: false
+        default: "0"
 
 permissions:
   contents: read
@@ -24,7 +28,7 @@ jobs:
     env:
       HOST: ${{ github.event.inputs.host || 'suleymankaynak.com' }}
       IP: ${{ github.event.inputs.ip }}
-      LIMIT: "0"
+      LIMIT: ${{ github.event.inputs.limit || '0' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,6 +49,11 @@ jobs:
             echo "== mail"; dig +short "mail.$HOST"
             echo '```'
           } | tee -a "$GITHUB_STEP_SUMMARY"
+          # Aynı kayıtlar Actions'ın "Annotations" bölümünde de görünsün
+          ann() { printf '::notice title=DNS %s::%s\n' "$1" "$(dig +short "$2" ${3:+"$3"} | tr '\n' ' ' | sed 's/%/%25/g')"; }
+          for t in A NS MX TXT; do ann "$t" "$HOST" "$t"; done
+          ann www "www.$HOST"
+          ann mail "mail.$HOST"
 
       - name: Siteyi karşılaştır
         run: |
