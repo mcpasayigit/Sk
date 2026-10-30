@@ -1,0 +1,75 @@
+{
+ "saat": "02:08:18 UTC",
+ "gecen_sn": 1111,
+ "dosya": 2485,
+ "mb": 1061.0,
+ "sayfa": 222,
+ "kuyruk": 0,
+ "calisan": 0,
+ "islenen": 2523,
+ "basarisiz": 38,
+ "yanitlar": {
+  "200": 2487,
+  "404": 36
+ },
+ "son_kaydedilen": [
+  [
+   "leymankaynak.com/wp-content/plugins/nextgen-gallery/static/Slideshow/slick/fonts/slick.ttf",
+   1892,
+   0.7
+  ],
+  [
+   "kaynak.com/wp-content/plugins/nextgen-gallery/static/Slideshow/slick/slick-1.8.0-modded.js",
+   89024,
+   1.7
+  ],
+  [
+   "leymankaynak.com/wp-content/plugins/nextgen-gallery/static/Slideshow/slick/fonts/slick.svg",
+   2152,
+   0.7
+  ],
+  [
+   "s://suleymankaynak.com/wp-content/plugins/responsive-lightbox/font/responsive-lightbox.svg",
+   0,
+   4.9
+  ],
+  [
+   "kaynak.com/wp-content/plugins/nextgen-gallery/static/FontAwesome/webfonts/fa-solid-900.ttf",
+   419720,
+   4.5
+  ],
+  [
+   "https://suleymankaynak.com/sertifikalar/nggallery/thumbnails",
+   462644,
+   5.7
+  ]
+ ],
+ "son_basarisiz": [
+  [
+   "https://suleymankaynak.com/katarakt-nedir/&title=KATARAKT%20NED%C4%B0R",
+   "HTTP 404"
+  ],
+  [
+   "https://suleymankaynak.com/goz-hastaliklari/&title=G%C3%96Z%20HASTALIKLARI",
+   "HTTP 404"
+  ],
+  [
+   "zi-3/&title=G%C3%96Z%20D%C4%B0B%C4%B0%20MUAYENES%C4%B0N%C4%B0N%20%C3%96NEM%C4%B0",
+   "HTTP 404"
+  ],
+  [
+   "ttps://suleymankaynak.com/katarakt-tedavisi/&title=KATARAKT%20TEDAV%C4%B0S%C4%B0",
+   "HTTP 404"
+  ],
+  [
+   "https://suleymankaynak.com/wp-content/themes/images/bg-input.png",
+   "HTTP 404"
+  ],
+  [
+   "https://suleymankaynak.com/wp-content/themes/images/bg-input-focus.png",
+   "HTTP 404"
+  ]
+ ],
+ "uyarilar": [],
+ "bitti": true
+}
