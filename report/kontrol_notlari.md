@@ -35,7 +35,7 @@ Tüm HTML (191) ve JS (30) dosyaları tarandı. Dışarıdan eklenmiş zararlı 
 
 Bunlar WordPress veritabanındaki yazı içeriğine eklenmiş (temaya değil), bu yüzden diğer sayfalarda yok. Kopya olduğu gibi
 alındığı için `site/` içinde duruyor; yayınlanırsa bu iki sayfayı açan ziyaretçinin tarayıcısı bu adreslerden kod yükler.
-Dosyalarda başka şüpheli işaret (`eval`, `atob`, gizli bağlantı bloğu, `meta refresh`, uzun şifreli blok) yok.
+HTML'deki satır içi scriptlerde `eval`/`atob`/`document.write` gibi işaretler, gizli bağlantı blokları ve `meta refresh` yok. JS ve CSS dosyalarında yalnızca kütüphane ve lisans adresleri geçiyor, şifreli (packer/base64) blok yok.
 
 Diğer dış kaynaklar normal: Google Fonts, Google Maps, Google Docs/Forms iframe'leri, `gozsagligi.todnet.org` (2 görsel),
 `gmpg.org` (WordPress profil bağlantısı) ve temanın demo sitesine bir CSS başvurusu (`cdn.demo.runathemes.com`).
