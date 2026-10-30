@@ -14,7 +14,7 @@ suleymankaynak.com sitesinin statik kopyası (HTML, CSS, JS, görseller, doküma
 
 ## Veridyen / cPanel'e kurulum
 
-- `.cpanel.yml`: cPanel > Git Version Control > **Deploy HEAD Commit** ile `site/` klasörünü `/home/skaynak/public_html/` altına kopyalar. cPanel kullanıcı adı `skaynak` değilse `DEPLOYPATH` satırını değiştir.
+- `.cpanel.yml`: cPanel > Git Version Control > **Deploy HEAD Commit** ile `site/` klasörünü `/home/sulo/public_html/` altına kopyalar. cPanel kullanıcı adı `sulo` değilse `DEPLOYPATH` satırını değiştir.
 - `deploy/htaccess`: `public_html/.htaccess` olarak kopyalanır. `www` adresini `suleymankaynak.com`a, `http` adresini `https`e yönlendirir ve 404 sayfasını ayarlar.
 - `main` dalına zorla gönderim (force push) yapma: cPanel "Update from Remote" yalnızca ileri sarmayı (fast-forward) kabul eder.
 - Disk: site 1,1 GB. Klon + çalışma kopyası + `public_html` birlikte yaklaşık 3,3 GB tutar; hesaba en az 4 GB kota ver.

@@ -1,9 +1,9 @@
 ---
 # cPanel > Git Version Control > "Deploy HEAD Commit" bu görevleri çalıştırır.
-# cPanel kullanıcı adı skaynak değilse yalnızca aşağıdaki DEPLOYPATH satırını düzelt.
+# cPanel kullanıcı adı sulo değilse yalnızca aşağıdaki DEPLOYPATH satırını düzelt.
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/skaynak/public_html/
+    - export DEPLOYPATH=/home/sulo/public_html/
     - /bin/cp -a site/. $DEPLOYPATH
     - /bin/cp deploy/htaccess ${DEPLOYPATH}.htaccess
     - /bin/rm -f ${DEPLOYPATH}.nojekyll
