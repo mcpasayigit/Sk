@@ -1,0 +1,22 @@
+# suleymankaynak.com statik kopya - Apache / LiteSpeed ayarları
+# .cpanel.yml bu dosyayı public_html/.htaccess olarak kopyalar.
+
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# SSL doğrulama (AutoSSL) istekleri yönlendirmeye takılmasın
+RewriteRule ^\.well-known/ - [L]
+
+# www -> suleymankaynak.com (sitenin kendi asıl adresi çıplak alan adı)
+RewriteCond %{HTTP_HOST} ^www\.suleymankaynak\.com$ [NC]
+RewriteRule ^ https://suleymankaynak.com%{REQUEST_URI} [R=301,L]
+
+# http -> https (önünde proxy varsa X-Forwarded-Proto ile döngüyü engelle)
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://suleymankaynak.com%{REQUEST_URI} [R=301,L]
+</IfModule>

@@ -1,0 +1,42 @@
+name: 404 sayfasını al
+
+# Sitenin kendi "sayfa bulunamadı" sayfasını site/404.html olarak kaydeder (scripts/fetch_404.py).
+# Sitenin ayrı bir page-not-found sayfası yoksa Siteyi kopyala akışı da bunu kendiliğinden yapar.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mirror
+  cancel-in-progress: false
+
+jobs:
+  al:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SITE_URL: https://suleymankaynak.com
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /scripts/
+            /site/404.html
+          sparse-checkout-cone-mode: false
+
+      - name: 404 sayfasını al
+        run: python3 scripts/fetch_404.py
+
+      - name: Repoya kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/404.html
+          if git diff --cached --quiet; then
+            echo "::notice title=404.html::değişiklik yok"
+            exit 0
+          fi
+          git commit -m "site/404.html: sitenin kendi 404 sayfası [skip ci]"
+          git push origin HEAD:main

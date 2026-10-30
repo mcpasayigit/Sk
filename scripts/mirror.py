@@ -646,12 +646,12 @@ SUSP_HTML = [
     ("</html> sonrası içerik", re.compile(r"</html>\s*(?:<script|<iframe|<div|<a\s)", re.I)),
     ("meta refresh", re.compile(r"<meta[^>]+http-equiv\s*=\s*[\"']?refresh", re.I)),
     ("sj887po", re.compile(r"sj887po")),
-    ("spam anahtar kelime", re.compile(r"viagra|cialis|casino|\bporn|slot gacor|\bjudi\b|togel|bahis", re.I)),
+    ("spam anahtar kelime", re.compile(r"viagra|\bcialis\b|casino|\bporn|slot gacor|\bjudi\b|togel|bahis", re.I)),
 ]
 SUSP_ANY = [
     ("document.write(unescape", re.compile(r"document\.write\s*\(\s*unescape", re.I)),
     ("sj887po", re.compile(r"sj887po")),
-    ("spam anahtar kelime", re.compile(r"viagra|cialis|slot gacor|\bjudi\b|togel", re.I)),
+    ("spam anahtar kelime", re.compile(r"viagra|\bcialis\b|slot gacor|\bjudi\b|togel", re.I)),
 ]
 HTTP_SELF = re.compile(r"http://(?:www\.)?" + re.escape(HP), re.I) if BASE.startswith("https") else None
 
@@ -920,6 +920,46 @@ def progress_loop(stop):
 
 
 # --------------------------------------------------------------------------- ana akış
+def grab_404():
+    """Sitenin kendi "sayfa bulunamadı" sayfasını, olmayan bir adrese sunucunun verdiği 404 yanıtının
+    gövdesini bayt bayt aynen site/404.html olarak kaydeder. Başarılıysa True döner."""
+    probe = BASE + "/sayfa-bulunamadi-kontrol-xyz-404/"
+    try:
+        req = urllib.request.Request(probe, headers={
+            "User-Agent": UA,
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "Accept-Language": "tr-TR,tr;q=0.9,en;q=0.8",
+            "Accept-Encoding": "identity",
+            "Referer": BASE + "/",
+        })
+        try:
+            resp = _opener.open(req, timeout=TIMEOUT)
+        except urllib.error.HTTPError as e:
+            resp = e
+        status = resp.getcode()
+        ctype = (resp.headers.get("Content-Type") or "").split(";")[0].strip().lower()
+        body, _total = _read(resp, PARSE_MAX)
+        enc = (resp.headers.get("Content-Encoding") or "").lower()
+        if body and enc == "gzip":
+            body = gzip.decompress(body)
+        elif body and enc == "deflate":
+            try:
+                body = zlib.decompress(body)
+            except zlib.error:
+                body = zlib.decompress(body, -15)
+    except Exception as e:
+        print("404 sayfası alınamadı: %s: %s" % (type(e).__name__, str(e)[:120]), flush=True)
+        return False
+    if status != 404 or ctype not in HTML_TYPES or not body:
+        print("404 sayfası alınamadı: olmayan adres HTTP %s (%s) verdi" % (status, ctype or "?"), flush=True)
+        return False
+    os.makedirs(OUT, exist_ok=True)
+    with open(os.path.join(OUT, "404.html"), "wb") as f:
+        f.write(body)
+    print("404 sayfası kaydedildi: site/404.html (%d bayt)" % len(body), flush=True)
+    return True
+
+
 def main():
     t0 = time.time()
     try:
@@ -970,6 +1010,8 @@ def main():
     nf = os.path.join(OUT, "page-not-found", "index.html")
     if os.path.isfile(nf):
         shutil.copyfile(nf, os.path.join(OUT, "404.html"))
+    else:
+        grab_404()      # sitede ayrı bir "page-not-found" sayfası yoksa sunucunun 404 yanıtını al
     open(os.path.join(OUT, ".nojekyll"), "w").close()
 
     text, ozet = build_report(t0, ips, True)
