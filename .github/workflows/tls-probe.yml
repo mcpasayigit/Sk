@@ -1,0 +1,38 @@
+name: TLS denemesi
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: Alan adı
+        default: suleymankaynak.com
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/tls-probe.yml
+      - scripts/tls_probe.py
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      H: ${{ github.event.inputs.host || 'suleymankaynak.com' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dene
+        run: |
+          mkdir -p report
+          python3 scripts/tls_probe.py "$H" > report/tls_probe.txt 2>&1 || true
+          cat report/tls_probe.txt
+      - name: Sonucu kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add report/tls_probe.txt
+          git commit -q -m "TLS denemesi sonucu" || exit 0
+          git pull -q --rebase origin main
+          git push origin HEAD:main
