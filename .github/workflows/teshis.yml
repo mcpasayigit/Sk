@@ -1,0 +1,66 @@
+name: Bağlantı tanısı
+
+# Sitenin HTTP/HTTPS yanıtını GitHub'ın makinesinden dener, sonucu report/teshis.txt dosyasına yazar.
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: Alan adı
+        default: suleymankaynak.com
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/teshis.yml
+
+permissions:
+  contents: write
+
+jobs:
+  teshis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      H: ${{ github.event.inputs.host || 'suleymankaynak.com' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dene
+        run: |
+          mkdir -p report
+          command -v dig >/dev/null || sudo apt-get install -y -qq dnsutils >/dev/null
+          IP=$(getent ahostsv4 "$H" | awk '{print $1; exit}')
+          {
+            echo "# Bağlantı tanısı: $H ($(date -u '+%F %T') UTC)"
+            echo "## DNS"
+            for t in A AAAA NS MX; do echo "-- $t"; dig +short "$H" "$t"; done
+            echo "-- www"; dig +short "www.$H"
+            echo "## TCP ($IP)"
+            for p in 80 443; do
+              if timeout 8 bash -c "</dev/tcp/$IP/$p" 2>/dev/null; then echo "$IP:$p açık"; else echo "$IP:$p kapalı ya da zaman aşımı"; fi
+            done
+            echo "## HTTP başlıkları"
+            curl -sS -m 20 -o /dev/null -D - "http://$H/" 2>&1 | head -20
+            echo "## HTTPS (varsayılan)"
+            curl -vsS -m 20 -o /dev/null "https://$H/" 2>&1 | head -40
+            echo "## HTTPS (yalnızca TLS 1.2)"
+            curl -vsS -m 20 --tlsv1.2 --tls-max 1.2 -o /dev/null "https://$H/" 2>&1 | head -30
+            echo "## openssl"
+            for v in -tls1_3 -tls1_2; do
+              echo "-- $v"
+              timeout 15 openssl s_client -connect "$IP:443" -servername "$H" $v </dev/null 2>&1 | head -14
+            done
+            echo "## www HTTPS"
+            curl -vsS -m 20 -o /dev/null "https://www.$H/" 2>&1 | head -20
+            echo "## karşılaştırma: retina-gm.com HTTPS"
+            curl -sS -m 20 -o /dev/null -w "kod=%{http_code} tcp=%{time_connect}s tls=%{time_appconnect}s\n" "https://retina-gm.com/" 2>&1
+          } > report/teshis.txt 2>&1
+          wc -l report/teshis.txt
+
+      - name: Sonucu kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add report/teshis.txt
+          git commit -q -m "Bağlantı tanısı sonucu" || exit 0
+          git pull -q --rebase origin main
+          git push origin HEAD:main
